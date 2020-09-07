@@ -11,7 +11,7 @@ npm install react-native-epson-epos
 ## Usage
 
 ```js
-import EpsonEpos from "react-native-epson-epos";
+import EpsonEpos from "@cezembre/sreact-native-epson-epos";
 
 // ...
 

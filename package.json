@@ -1,5 +1,5 @@
 {
-  "name": "react-native-epson-epos",
+  "name": "@cezembre/react-native-epson-epos",
   "version": "0.1.2",
   "description": "A react native module that handle Epson ePOS SDK.",
   "main": "lib/commonjs/index",
