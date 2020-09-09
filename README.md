@@ -1,17 +1,17 @@
-# react-native-epson-epos
+# @cezembre/react-native-epson-epos
 
 A react native module that handle Epson ePOS SDK.
 
 ## Installation
 
 ```sh
-npm install react-native-epson-epos
+npm install @cezembre/react-native-epson-epos
 ```
 
 ## Usage
 
 ```js
-import EpsonEpos from "@cezembre/sreact-native-epson-epos";
+import EpsonEpos from "@cezembre/react-native-epson-epos";
 
 // ...
 
