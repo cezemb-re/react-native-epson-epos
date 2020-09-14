@@ -2,9 +2,9 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { enableBluetooth, useBluetoothState } from './helpers/bluetooth';
 import { Layout, Toggle, Text } from '@ui-kitten/components';
-import Printers from './printers';
+import Printers from './printers/list';
 
-const Home = () => {
+export default () => {
   const bluetoothState = useBluetoothState();
   const [bluetoothError, setBluetoothError] = useState(null);
 
@@ -55,5 +55,3 @@ const style = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default Home;

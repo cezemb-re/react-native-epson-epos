@@ -5,7 +5,13 @@ import { useBluetooth } from './helpers/bluetooth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './home';
-import { ApplicationProvider, Spinner } from '@ui-kitten/components';
+import Printer from './printers/page';
+import {
+  ApplicationProvider,
+  Spinner,
+  IconRegistry,
+} from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 
 export default function App() {
@@ -32,13 +38,17 @@ export default function App() {
   const Stack = createStackNavigator();
 
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ApplicationProvider>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Printer" component={Printer} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ApplicationProvider>
+    </>
   );
 }
 

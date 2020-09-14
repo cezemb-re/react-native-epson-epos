@@ -1,5 +1,5 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import isEqual from 'lodash.isequal';
 
 const { EpsonEpos } = NativeModules;
@@ -7,33 +7,33 @@ const { EpsonEpos } = NativeModules;
 const epsonEposEmitter = new NativeEventEmitter(EpsonEpos);
 
 export enum PortType {
-  ALL = EpsonEpos.FILTER_OPTION_PORT_TYPE_ALL,
-  TCP = EpsonEpos.FILTER_OPTION_PORT_TYPE_TCP,
-  BLUETOOTH = EpsonEpos.FILTER_OPTION_PORT_TYPE_BLUETOOTH,
-  USB = EpsonEpos.FILTER_OPTION_PORT_TYPE_USB,
+  ALL = EpsonEpos.DISCOVERY_PORTTYPE_ALL,
+  TCP = EpsonEpos.DISCOVERY_PORTTYPE_TCP,
+  BLUETOOTH = EpsonEpos.DISCOVERY_PORTTYPE_BLUETOOTH,
+  USB = EpsonEpos.DISCOVERY_PORTTYPE_USB,
 }
 
 export enum DeviceModel {
-  ALL = EpsonEpos.FILTER_OPTION_DEVICE_MODEL_ALL,
+  ALL = EpsonEpos.DISCOVERY_MODEL_ALL,
 }
 
 export enum EpsonFilter {
-  FILTER_NAME = EpsonEpos.FILTER_OPTION_FILTER_NAME,
-  FILTER_NONE = EpsonEpos.FILTER_OPTION_FILTER_NONE,
+  FILTER_NAME = EpsonEpos.DISCOVERY_FILTER_NAME,
+  FILTER_NONE = EpsonEpos.DISCOVERY_FILTER_NONE,
 }
 
 export enum DeviceType {
-  ALL = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_ALL,
-  PRINTER = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_PRINTER,
-  HYBRID_PRINTER = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_HYBRID_PRINTER,
-  DISPLAY = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_DISPLAY,
-  KEYBOARD = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_KEYBOARD,
-  SCANNER = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_SCANNER,
-  SERIAL = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_SERIAL,
-  POS_KEYBOARD = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_POS_KEYBOARD,
-  MSR = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_MSR,
-  GFE = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_GFE,
-  OTHER_PERIPHERAL = EpsonEpos.FILTER_OPTION_DEVICE_TYPE_OTHER_PERIPHERAL,
+  ALL = EpsonEpos.DISCOVERY_TYPE_ALL,
+  PRINTER = EpsonEpos.DISCOVERY_TYPE_PRINTER,
+  HYBRID_PRINTER = EpsonEpos.DISCOVERY_TYPE_HYBRID_PRINTER,
+  DISPLAY = EpsonEpos.DISCOVERY_TYPE_DISPLAY,
+  KEYBOARD = EpsonEpos.DISCOVERY_TYPE_KEYBOARD,
+  SCANNER = EpsonEpos.DISCOVERY_TYPE_SCANNER,
+  SERIAL = EpsonEpos.DISCOVERY_TYPE_SERIAL,
+  POS_KEYBOARD = EpsonEpos.DISCOVERY_TYPE_POS_KEYBOARD,
+  MSR = EpsonEpos.DISCOVERY_TYPE_MSR,
+  GFE = EpsonEpos.DISCOVERY_TYPE_GFE,
+  OTHER_PERIPHERAL = EpsonEpos.DISCOVERY_TYPE_OTHER_PERIPHERAL,
 }
 
 export interface DiscoveryParams {
@@ -43,6 +43,14 @@ export interface DiscoveryParams {
   epsonFilter?: EpsonFilter;
   deviceType?: DeviceType;
   bondedDevices?: boolean;
+}
+
+export enum DiscoveryErrors {
+  ERR_PARAM = 'ERR_PARAM',
+  ERR_ILLEGAL = 'ERR_ILLEGAL',
+  ERR_MEMORY = 'ERR_MEMORY',
+  ERR_FAILURE = 'ERR_FAILURE',
+  ERR_PROCESSING = 'ERR_PROCESSING',
 }
 
 export const defaultBroadcast: string = '255.255.255.255';
@@ -81,9 +89,7 @@ export async function startDiscovery(
     params.broadcast,
     params.deviceModel,
     params.epsonFilter,
-    params.bondedDevices
-      ? EpsonEpos.FILTER_OPTION_BONDED_DEVICES_TRUE
-      : EpsonEpos.FILTER_OPTION_BONDED_DEVICES_FALSE,
+    params.bondedDevices ? EpsonEpos.DISCOVERY_TRUE : EpsonEpos.DISCOVERY_FALSE,
     params.deviceType
   );
 }
@@ -92,48 +98,68 @@ export async function stopDiscovery(): Promise<void> {
   await EpsonEpos.stopDiscovery();
 }
 
-function compareDiscoveryParams(
-  a: DiscoveryParams | null,
-  b: DiscoveryParams | null
-): boolean {
-  return isEqual(a, b);
-}
-
 function useMemoizedDiscoveryParams(
   params: DiscoveryParams
 ): { current: DiscoveryParams | null } {
   const memoizedParams: { current: DiscoveryParams | null } = useRef(null);
 
-  if (!compareDiscoveryParams(params, memoizedParams.current)) {
+  if (!isEqual(params, memoizedParams.current)) {
     memoizedParams.current = params;
   }
 
   return memoizedParams;
 }
 
+export interface Device {
+  target: string;
+  deviceName: string;
+  ipAddress: string;
+  macAddress: string;
+  bdAddress: string;
+}
+
 export function useDiscovery(
   params: DiscoveryParams = {}
-): { discovering: boolean; error: Error | null; devices: Array<object> } {
+): {
+  discovering: boolean;
+  error: Error | null;
+  devices: Array<Device>;
+} {
   const [discovering, setDiscovering] = useState(false);
   const [error, setError] = useState(null);
+  const [devices, setDevices] = useState([] as Array<Device>);
 
   const memoizedParams = useMemoizedDiscoveryParams(params);
 
-  const onDiscovery = (target: string) => {
-    console.log(target); // TODO : Connect
-  };
+  const onDiscovery = useCallback((device: Device) => {
+    setDevices((list: Array<Device>) => {
+      const index = list.findIndex((d: Device) => d.target === device.target);
+      if (index === -1) {
+        return [device, ...list];
+      }
+      return list;
+    });
+  }, []);
 
   useEffect(() => {
     epsonEposEmitter.addListener('discovery', onDiscovery);
 
     (async () => {
       try {
-        console.log('startDiscovery()', memoizedParams.current);
         await startDiscovery(memoizedParams.current);
         setDiscovering(true);
       } catch (e) {
-        setDiscovering(false);
-        setError(e);
+        if (e.code === DiscoveryErrors.ERR_ILLEGAL) {
+          try {
+            await stopDiscovery();
+            await startDiscovery(memoizedParams.current);
+            setDiscovering(true);
+          } catch (_e) {
+            setError(_e);
+          }
+        } else {
+          setError(e);
+        }
       }
     })();
 
@@ -144,14 +170,13 @@ export function useDiscovery(
 
       (async () => {
         try {
-          console.log('stopDiscovery()');
           await stopDiscovery();
         } catch (e) {
           setError(e);
         }
       })();
     };
-  }, [memoizedParams]);
+  }, [memoizedParams, onDiscovery]);
 
-  return { discovering, error, devices: [] };
+  return { discovering, error, devices };
 }
