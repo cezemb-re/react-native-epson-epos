@@ -15,7 +15,6 @@
     "@react-navigation/stack": "^5.9.0",
     "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
-    "lodash.isequal": "^4.5.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-ble-manager": "^7.3.1",
