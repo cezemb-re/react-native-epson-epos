@@ -314,8 +314,173 @@ export async function addTextAlign(
   await EpsonEpos.addTextAlign(align);
 }
 
+export async function addLineSpace(lineSpace: number): Promise<void> {
+  await EpsonEpos.addLineSpace(lineSpace);
+}
+
+export async function addTextRotate(rotate: boolean = true): Promise<void> {
+  await EpsonEpos.addLineSpace(
+    rotate ? EpsonEpos.PRINTER_TRUE : EpsonEpos.PRINTER_FALSE
+  );
+}
+
 export async function addText(data: string): Promise<void> {
   await EpsonEpos.addText(data);
+}
+
+export enum Lang {
+  ENGLISH = EpsonEpos.PRINTER_LANG_EN,
+  JAPANESE = EpsonEpos.PRINTER_LANG_JA,
+  SIMPLIFIED_CHINESE = EpsonEpos.PRINTER_LANG_ZH_CN,
+  TRADITIONAL_CHINESE = EpsonEpos.PRINTER_LANG_ZH_TW,
+  KOREAN = EpsonEpos.PRINTER_LANG_KO,
+  THAI = EpsonEpos.PRINTER_LANG_TH,
+  VIETNAMESE = EpsonEpos.PRINTER_LANG_VI,
+}
+
+export async function addTextLang(lang: Lang): Promise<void> {
+  await EpsonEpos.addTextLang(lang);
+}
+
+export enum Font {
+  A = EpsonEpos.PRINTER_FONT_A,
+  B = EpsonEpos.PRINTER_FONT_B,
+  C = EpsonEpos.PRINTER_FONT_C,
+  D = EpsonEpos.PRINTER_FONT_D,
+  E = EpsonEpos.PRINTER_FONT_E,
+}
+
+export async function addTextFont(font: Font): Promise<void> {
+  await EpsonEpos.addTextFont(font);
+}
+
+export async function addTextSmooth(smooth: boolean): Promise<void> {
+  await EpsonEpos.addTextSmooth(
+    smooth ? EpsonEpos.PRINTER_TRUE : EpsonEpos.PRINTER_FALSE
+  );
+}
+
+export async function addTextSize(
+  width: number,
+  height: number
+): Promise<void> {
+  await EpsonEpos.addTextSize(width, height);
+}
+
+export async function addTextStyle(
+  reverse: boolean,
+  ul: boolean,
+  em: boolean,
+  color: number
+): Promise<void> {
+  await EpsonEpos.addTextStyle(
+    reverse ? EpsonEpos.PRINTER_TRUE : EpsonEpos.PRINTER_FALSE,
+    ul ? EpsonEpos.PRINTER_TRUE : EpsonEpos.PRINTER_FALSE,
+    em ? EpsonEpos.PRINTER_TRUE : EpsonEpos.PRINTER_FALSE,
+    color
+  );
+}
+
+export async function addHPosition(x: number): Promise<void> {
+  await EpsonEpos.addHPosition(x);
+}
+
+export async function addFeedUnit(unit: number): Promise<void> {
+  await EpsonEpos.addFeedUnit(unit);
+}
+
+export async function addFeedLine(line: number): Promise<void> {
+  await EpsonEpos.addFeedLine(line);
+}
+
+export enum Color {
+  NONE = EpsonEpos.PRINTER_COLOR_NONE,
+  _1 = EpsonEpos.PRINTER_COLOR_1,
+  _2 = EpsonEpos.PRINTER_COLOR_2,
+  _3 = EpsonEpos.PRINTER_COLOR_3,
+  _4 = EpsonEpos.PRINTER_COLOR_4,
+  DEFAULT = EpsonEpos.PRINTER_PARAM_DEFAULT,
+}
+
+export enum ColorMode {
+  MONO = EpsonEpos.PRINTER_MODE_MONO,
+  GRAY16 = EpsonEpos.PRINTER_MODE_GRAY16,
+  MONO_HIGH_DENSITY = EpsonEpos.PRINTER_MODE_MONO_HIGH_DENSITY,
+  DEFAULT = EpsonEpos.PRINTER_PARAM_DEFAULT,
+}
+
+export enum Halftone {
+  DITHER = EpsonEpos.PRINTER_HALFTONE_DITHER,
+  ERROR_DIFFUSION = EpsonEpos.PRINTER_HALFTONE_ERROR_DIFFUSION,
+  THRESHOLD = EpsonEpos.PRINTER_HALFTONE_THRESHOLD,
+  DEFAULT = EpsonEpos.PRINTER_PARAM_DEFAULT,
+}
+
+export enum Compress {
+  DEFLATE = EpsonEpos.PRINTER_COMPRESS_DEFLATE,
+  NONE = EpsonEpos.PRINTER_COMPRESS_NONE,
+  AUTO = EpsonEpos.PRINTER_COMPRESS_AUTO,
+  DEFAULT = EpsonEpos.PRINTER_PARAM_DEFAULT,
+}
+
+export interface Image {
+  path: string;
+  x?: number;
+  y?: number;
+  width: number;
+  height: number;
+  color?: Color;
+  mode?: ColorMode;
+  halftone?: Halftone;
+  brightness?: number;
+  compress?: Compress;
+}
+
+export async function addImage(image: Image): Promise<void> {
+  if (!('x' in image)) {
+    image.x = 0;
+  }
+  if (!('y' in image)) {
+    image.y = 0;
+  }
+  if (!('color' in image)) {
+    image.color = Color.DEFAULT;
+  }
+  if (!('mode' in image)) {
+    image.mode = ColorMode.DEFAULT;
+  }
+  if (!('halftone' in image)) {
+    image.halftone = Halftone.DEFAULT;
+  }
+  if (!('brightness' in image)) {
+    image.brightness = 1.0;
+  }
+  if (!('compress' in image)) {
+    image.compress = Compress.DEFAULT;
+  }
+  await EpsonEpos.addImage(
+    image.path,
+    image.x,
+    image.y,
+    image.width,
+    image.height,
+    image.color,
+    image.mode,
+    image.halftone,
+    image.brightness,
+    image.compress
+  );
+}
+
+export enum Cut {
+  FEED = EpsonEpos.PRINTER_CUT_FEED,
+  NO_FEED = EpsonEpos.PRINTER_CUT_NO_FEED,
+  RESERVE = EpsonEpos.PRINTER_CUT_RESERVE,
+  DEFAULT = EpsonEpos.PRINTER_PARAM_DEFAULT,
+}
+
+export async function addCut(type: Cut = Cut.DEFAULT): Promise<void> {
+  await EpsonEpos.addCut(type);
 }
 
 export async function beginTransaction(): Promise<void> {
@@ -343,6 +508,10 @@ export async function sendData(
     timeout = maxSendDataTimeout;
   }
   await EpsonEpos.sendData(timeout);
+}
+
+export async function print(): Promise<void> {
+  await EpsonEpos.print();
 }
 
 export enum PaperStatus {
@@ -642,6 +811,6 @@ export function usePrinterStatus(): {
   };
 }
 
-export async function printTestSheet(target: string) {
-  await EpsonEpos.printTestSheet(target);
+export async function printTestSheet() {
+  await EpsonEpos.printTestSheet();
 }

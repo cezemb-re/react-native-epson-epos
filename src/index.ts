@@ -1,36 +1,3 @@
-export {
-  PortType,
-  DeviceModel,
-  EpsonFilter,
-  DeviceType,
-  DiscoveryParams,
-  startDiscovery,
-  stopDiscovery,
-  useDiscovery,
-} from './discovery';
-
-export {
-  PrinterSeries,
-  ModelLang,
-  defaultConnectPrinterTimeout,
-  minConnectPrinterTimeout,
-  maxConnectPrinterTimeout,
-  initPrinter,
-  connectPrinter,
-  getPrinterSetting,
-  usePrinterSettings,
-  PrinterSetting,
-  printerSettingsToStrings,
-  disconnectPrinter,
-  PaperStatus,
-  DrawerStatus,
-  BatteryLevel,
-  PrinterStatus,
-  getPrinterStatus,
-  printerStatusToStrings,
-  printTestSheet,
-  usePrinterStatus,
-  addTextAlign,
-  addText,
-  sendData,
-} from './printer';
+export * from './discovery';
+export * from './printer';
+export * from './ticket';

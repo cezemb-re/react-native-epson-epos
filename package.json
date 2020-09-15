@@ -66,8 +66,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*",
-    "lodash.isequal": "*"
+    "react-native": "*"
   },
   "jest": {
     "preset": "react-native",

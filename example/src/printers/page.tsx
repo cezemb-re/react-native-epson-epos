@@ -21,7 +21,7 @@ import {
   usePrinterStatus,
 } from '@cezembre/react-native-epson-epos';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 export default ({
   route: { params },
@@ -57,12 +57,12 @@ export default ({
 
     (async () => {
       try {
-        await printTestSheet(params.target);
+        await printTestSheet();
       } catch (e) {
         setPrintError(e);
       }
     })();
-  }, [params.target]);
+  }, []);
 
   const navigation = useNavigation();
 

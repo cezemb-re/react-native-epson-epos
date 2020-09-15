@@ -91,22 +91,24 @@ class EpsonEposModule : ReactContextBaseJavaModule {
   override fun getConstants(): Map<String, Any> {
     val constants: HashMap<String, Any> = HashMap()
 
-    // Filter options
+    // Discovery
+    constants.put("DISCOVERY_TRUE", Discovery.TRUE)
+    constants.put("DISCOVERY_FALSE", Discovery.FALSE)
 
-    // Port types
+    // Discovery > Port types
     constants.put("DISCOVERY_PORTTYPE_ALL", Discovery.PORTTYPE_ALL)
     constants.put("DISCOVERY_PORTTYPE_TCP", Discovery.PORTTYPE_TCP)
     constants.put("DISCOVERY_PORTTYPE_BLUETOOTH", Discovery.PORTTYPE_BLUETOOTH)
     constants.put("DISCOVERY_PORTTYPE_USB", Discovery.PORTTYPE_USB)
 
-    // Device models
+    // Discovery > Models
     constants.put("DISCOVERY_MODEL_ALL", Discovery.MODEL_ALL)
 
-    // Epson filters
+    // Discovery > Filters
     constants.put("DISCOVERY_FILTER_NAME", Discovery.FILTER_NAME)
     constants.put("DISCOVERY_FILTER_NONE", Discovery.FILTER_NONE)
 
-    // Device types
+    // Discovery > Types
     constants.put("DISCOVERY_TYPE_ALL", Discovery.TYPE_ALL)
     constants.put("DISCOVERY_TYPE_PRINTER", Discovery.TYPE_PRINTER)
     constants.put("DISCOVERY_TYPE_HYBRID_PRINTER", Discovery.TYPE_HYBRID_PRINTER)
@@ -119,11 +121,13 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("DISCOVERY_TYPE_GFE", Discovery.TYPE_GFE)
     constants.put("DISCOVERY_TYPE_OTHER_PERIPHERAL", Discovery.TYPE_OTHER_PERIPHERAL)
 
-    // Bonded devices
-    constants.put("DISCOVERY_TRUE", Discovery.TRUE)
-    constants.put("DISCOVERY_FALSE", Discovery.FALSE)
+    // Printer
+    constants.put("PRINTER_FALSE", Printer.FALSE)
+    constants.put("PRINTER_TRUE", Printer.TRUE)
+    constants.put("PRINTER_UNKNOWN", Printer.UNKNOWN)
+    constants.put("PRINTER_PARAM_DEFAULT", Printer.PARAM_DEFAULT)
 
-    // Printer series
+    // Printer > Series
     constants.put("PRINTER_TM_M10", Printer.TM_M10)
     constants.put("PRINTER_TM_M30", Printer.TM_M30)
     constants.put("PRINTER_TM_M30II", Printer.TM_M30II)
@@ -146,7 +150,7 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("PRINTER_TM_L90", Printer.TM_L90)
     constants.put("PRINTER_TM_H6000", Printer.TM_H6000)
 
-    // Model lang
+    // Printer > Models
     constants.put("PRINTER_MODEL_ANK", Printer.MODEL_ANK)
     constants.put("PRINTER_MODEL_CHINESE", Printer.MODEL_CHINESE)
     constants.put("PRINTER_MODEL_TAIWAN", Printer.MODEL_TAIWAN)
@@ -154,10 +158,16 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("PRINTER_MODEL_THAI", Printer.MODEL_THAI)
     constants.put("PRINTER_MODEL_SOUTHASIA", Printer.MODEL_SOUTHASIA)
 
-    // Printer status
-    constants.put("PRINTER_FALSE", Printer.FALSE)
-    constants.put("PRINTER_TRUE", Printer.TRUE)
-    constants.put("PRINTER_UNKNOWN", Printer.UNKNOWN)
+    // Printer > Langs
+    constants.put("PRINTER_LANG_EN", Printer.LANG_EN)
+    constants.put("PRINTER_LANG_JA", Printer.LANG_JA)
+    constants.put("PRINTER_LANG_ZH_CN", Printer.LANG_ZH_CN)
+    constants.put("PRINTER_LANG_ZH_TW", Printer.LANG_ZH_TW)
+    constants.put("PRINTER_LANG_KO", Printer.LANG_KO)
+    constants.put("PRINTER_LANG_TH", Printer.LANG_TH)
+    constants.put("PRINTER_LANG_VI", Printer.LANG_VI)
+
+    // Printer > Status
     constants.put("PRINTER_PAPER_OK", Printer.PAPER_OK)
     constants.put("PRINTER_PAPER_NEAR_END", Printer.PAPER_NEAR_END)
     constants.put("PRINTER_PAPER_EMPTY", Printer.PAPER_EMPTY)
@@ -173,12 +183,13 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("PRINTER_BATTERY_LEVEL_5", Printer.BATTERY_LEVEL_5)
     constants.put("PRINTER_BATTERY_LEVEL_6", Printer.BATTERY_LEVEL_6)
 
+    // Printer > Aligns
     constants.put("PRINTER_ALIGN_LEFT", Printer.ALIGN_LEFT)
     constants.put("PRINTER_ALIGN_CENTER", Printer.ALIGN_CENTER)
     constants.put("PRINTER_ALIGN_RIGHT", Printer.ALIGN_RIGHT)
     constants.put("PRINTER_PARAM_DEFAULT", Printer.PARAM_DEFAULT)
 
-    // Events
+    // Printer > Events
     constants.put("PRINTER_EVENT_ONLINE", Printer.EVENT_ONLINE)
     constants.put("PRINTER_EVENT_OFFLINE", Printer.EVENT_OFFLINE)
     constants.put("PRINTER_EVENT_POWER_OFF", Printer.EVENT_POWER_OFF)
@@ -191,6 +202,7 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("PRINTER_EVENT_BATTERY_ENOUGH", Printer.EVENT_BATTERY_ENOUGH)
     constants.put("PRINTER_EVENT_BATTERY_EMPTY", Printer.EVENT_BATTERY_EMPTY)
 
+    // Printer > Settings
     constants.put("PRINTER_SETTING_PAPER_WIDTH", Printer.SETTING_PAPERWIDTH)
     constants.put("PRINTER_SETTING_PRINT_DENSITY", Printer.SETTING_PRINTDENSITY)
     constants.put("PRINTER_SETTING_PRINT_SPEED", Printer.SETTING_PRINTSPEED)
@@ -228,6 +240,40 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     constants.put("PRINTER_SETTING_PRINT_SPEED_12", Printer.SETTING_PRINTSPEED_12)
     constants.put("PRINTER_SETTING_PRINT_SPEED_13", Printer.SETTING_PRINTSPEED_13)
     constants.put("PRINTER_SETTING_PRINT_SPEED_14", Printer.SETTING_PRINTSPEED_14)
+
+    // Printer > Fonts
+    constants.put("PRINTER_FONT_A", Printer.FONT_A)
+    constants.put("PRINTER_FONT_B", Printer.FONT_B)
+    constants.put("PRINTER_FONT_C", Printer.FONT_C)
+    constants.put("PRINTER_FONT_D", Printer.FONT_D)
+    constants.put("PRINTER_FONT_E", Printer.FONT_E)
+
+    // Printer > Colors
+    constants.put("PRINTER_COLOR_NONE", Printer.COLOR_NONE)
+    constants.put("PRINTER_COLOR_1", Printer.COLOR_1)
+    constants.put("PRINTER_COLOR_2", Printer.COLOR_2)
+    constants.put("PRINTER_COLOR_3", Printer.COLOR_3)
+    constants.put("PRINTER_COLOR_4", Printer.COLOR_4)
+
+    // Printer > Modes
+    constants.put("PRINTER_MODE_MONO", Printer.MODE_MONO)
+    constants.put("PRINTER_MODE_GRAY16", Printer.MODE_GRAY16)
+    constants.put("PRINTER_MODE_MONO_HIGH_DENSITY", Printer.MODE_MONO_HIGH_DENSITY)
+
+    // Printer > Halftones
+    constants.put("PRINTER_HALFTONE_DITHER", Printer.HALFTONE_DITHER)
+    constants.put("PRINTER_HALFTONE_ERROR_DIFFUSION", Printer.HALFTONE_ERROR_DIFFUSION)
+    constants.put("PRINTER_HALFTONE_THRESHOLD", Printer.HALFTONE_THRESHOLD)
+
+    // Printer > Halftones
+    constants.put("PRINTER_COMPRESS_DEFLATE", Printer.COMPRESS_DEFLATE)
+    constants.put("PRINTER_COMPRESS_NONE", Printer.COMPRESS_NONE)
+    constants.put("PRINTER_COMPRESS_AUTO", Printer.COMPRESS_AUTO)
+
+    // Printer > Cuts
+    constants.put("PRINTER_CUT_FEED", Printer.CUT_FEED)
+    constants.put("PRINTER_CUT_NO_FEED", Printer.CUT_NO_FEED)
+    constants.put("PRINTER_CUT_RESERVE", Printer.CUT_RESERVE)
 
     return constants
   }
@@ -496,6 +542,11 @@ class EpsonEposModule : ReactContextBaseJavaModule {
     promise: Promise
   ) {
 
+    if (_printer === null) {
+      promise.resolve(null)
+      return
+    }
+
     var status: PrinterStatusInfo? = _printer?.getStatus()
 
     if (status?.errorStatus == Printer.NO_ERR) {
@@ -622,6 +673,236 @@ class EpsonEposModule : ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  fun addTextLang(
+    lang: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addTextLang(lang)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addTextFont(
+    font: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addTextFont(font)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addTextSmooth(
+    smooth: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addTextSmooth(smooth)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addTextSize(
+    width: Int,
+    height: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addTextSize(width, height)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addTextStyle(
+    reverse: Int,
+    ul: Int,
+    em: Int,
+    color: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addTextStyle(reverse, ul, em, color)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addHPosition(
+    x: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addHPosition(x)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addFeedUnit(
+    unit: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addFeedUnit(unit)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addFeedLine(
+    line: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addFeedLine(line)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
+  fun addImage(
+    path: String,
+    x: Int,
+    y: Int,
+    width: Int,
+    height: Int,
+    color: Int,
+    mode: Int,
+    halftone: Int,
+    brightness: Double,
+    compress: Int,
+    promise: Promise
+  ) {
+    try {
+
+      var inputStream: InputStream? = _assetManager?.open(path)
+
+      var image: Bitmap = BitmapFactory.decodeStream(inputStream);
+
+      _printer?.addImage(
+        image,
+        x, y,
+        width, height,
+        color,
+        mode,
+        halftone,
+        brightness,
+        compress
+      )
+
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  // ...
+
+  @ReactMethod
+  fun addCut(
+    type: Int,
+    promise: Promise
+  ) {
+    try {
+      _printer?.addCut(type)
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+      when (errorStatus) {
+        Epos2Exception.ERR_ILLEGAL -> promise.reject("ERR_ILLEGAL", Exception("The control commands have not been buffered. This API was called while no communication had been started."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  // ...
+
+  @ReactMethod
   fun beginTransaction(
     promise: Promise
   ) {
@@ -688,8 +969,38 @@ class EpsonEposModule : ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  fun print(
+    promise: Promise
+  ) {
+    try {
+
+      _printer?.addCut(Printer.CUT_FEED);
+
+      _printer?.beginTransaction()
+
+      _printer?.sendData(Printer.PARAM_DEFAULT)
+
+      _printer?.endTransaction()
+
+      _printer?.clearCommandBuffer()
+
+      promise.resolve(null)
+    } catch (error: Epos2Exception) {
+      val errorStatus: Int = error.getErrorStatus()
+
+      when (errorStatus) {
+        Epos2Exception.ERR_PARAM -> promise.reject("ERR_PARAM", Exception("An invalid parameter was passed."))
+        Epos2Exception.ERR_MEMORY -> promise.reject("ERR_MEMORY", Exception("Memory necessary for processing could not be allocated."))
+        Epos2Exception.ERR_FAILURE -> promise.reject("ERR_FAILURE", Exception("An unknown error occurred."))
+        Epos2Exception.ERR_PROCESSING -> promise.reject("ERR_PROCESSING", Exception("Could not run the process."))
+        Epos2Exception.ERR_ILLEGAL -> promise.reject("ERR_ILLEGAL", Exception("The control commands have not been buffered. This API was called while no communication had been started."))
+        else -> promise.reject("UNKNOWN_ERROR", Exception("Unkown error"))
+      }
+    }
+  }
+
+  @ReactMethod
   fun printTestSheet(
-    target: String,
     promise: Promise
   ) {
     try {
@@ -717,14 +1028,7 @@ class EpsonEposModule : ReactContextBaseJavaModule {
 
       _printer?.addTextFont(Printer.FONT_B)
 
-      val name: StringBuilder = StringBuilder()
-      name.append("\n")
-      name.append("\n")
-      name.append("Cézembre")
-      name.append("\n")
-      name.append("\n")
-
-      _printer?.addText(name.toString())
+      _printer?.addText("\n\nCézembre\n\n")
 
       _printer?.addTextAlign(Printer.ALIGN_LEFT);
 
@@ -733,19 +1037,57 @@ class EpsonEposModule : ReactContextBaseJavaModule {
       _printer?.addTextFont(Printer.FONT_A)
 
       val infos: StringBuilder = StringBuilder()
-      infos.append("\n")
-      infos.append("\n")
+      infos.append("\n\n")
       infos.append("Package : @cezembre/react-native-epson-epos\n")
       infos.append("Author : Lucien Perouze\n")
-      infos.append("\n")
-      infos.append("\n")
       infos.append("Mail : lucien.perouze@cezembre.co\n")
       infos.append("Organisation : www.cezemb.re\n")
-      infos.append("\n")
-      infos.append("\n")
-      infos.append("\n")
+      infos.append("\n\n")
 
       _printer?.addText(infos.toString())
+
+      _printer?.addTextSize(8, 8)
+      _printer?.addText("8")
+
+      _printer?.addTextSize(7, 7)
+      _printer?.addText("7")
+
+      _printer?.addTextSize(6, 6)
+      _printer?.addText("6")
+
+      _printer?.addTextSize(5, 5)
+      _printer?.addText("5")
+
+      _printer?.addTextSize(4, 4)
+      _printer?.addText("4")
+
+      _printer?.addTextSize(3, 3)
+      _printer?.addText("3")
+
+      _printer?.addTextSize(2, 2)
+      _printer?.addText("2")
+
+      _printer?.addTextSize(1, 1)
+      _printer?.addText("1")
+
+      _printer?.addText("\n")
+
+      _printer?.addTextSize(3, 3)
+
+      _printer?.addText("Font A\n")
+
+      _printer?.addTextFont(Printer.FONT_B)
+      _printer?.addText("Font B\n")
+
+      _printer?.addTextFont(Printer.FONT_C)
+      _printer?.addText("Font C\n")
+
+      _printer?.addTextFont(Printer.FONT_A)
+      _printer?.addTextSmooth(Printer.TRUE)
+      _printer?.addTextSize(5, 5)
+      _printer?.addText("Smooth")
+
+      _printer?.addText("\n\n\n")
 
       _printer?.addCut(Printer.CUT_FEED);
 
